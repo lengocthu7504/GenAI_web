@@ -1,4 +1,4 @@
-
+import  base64
 import streamlit as st
 from PIL import Image
 import albumentations as A
@@ -75,11 +75,11 @@ def read_image(upload_file):
 
 
 
-back_ground= Image.open('images/background.jpg')
+back_ground= Image.open('images/hackathon_final.png')
 back_ground = image_resize(back_ground, int(back_ground.height), int(back_ground.width))
 
-# logo_hackathon = Image.open('images/logo_hackathon.png')
-# logo_hackathon = image_resize(logo_hackathon, int(logo_hackathon.height*1.4), int(logo_hackathon.width*1.4))
+logo = Image.open('images/logo4.png')
+logo = image_resize(logo, int(logo.height*0.5), int(logo.width*0.5))
 
 # logo_donvi_tc = Image.open('images/logo_dvtc.png')
 # logo_donvi_tc = image_resize(logo_donvi_tc, int(logo_donvi_tc.height*0.9), int(logo_donvi_tc.width*0.9))
@@ -89,30 +89,32 @@ back_ground = image_resize(back_ground, int(back_ground.height), int(back_ground
 
 def side_bar():
 # Tạo các nút nằm ngang cho taskbar
-    col1, col2, col3, col4 = st.columns(4)
+    st.sidebar.image(logo)
+    if st.sidebar.button("‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ MAIN MENU ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ "):
+        st.session_state.page = "main"
+    if st.sidebar.button("CHANGE BACKGROUND"):
+        st.session_state.page = "change_bg"
+    if st.sidebar.button("‎ ‎ ‎ ‎ ‎ ‎ ‎ IMAGE TO VIDEO ‎ ‎ ‎ ‎ ‎ ‎ ‎ "):
+        st.session_state.page = "img2vid"
+    if st.sidebar.button("‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ EDIT IMAGE ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ "):
+        st.session_state.page = "edit_image"
 
-    with col1:
-        col11, col12, col13 = st.columns(3)
-        with col12:
-          if st.button("MAIN"):
-              st.session_state.page = "main"
-    with col2:
-        if st.button("CHANGE BACKGROUND"):
-            st.session_state.page = "change_bg"
-    with col3:
-        if st.button("IMAGE TO VIDEO"):
-            st.session_state.page = "img2vid"
-    with col4:
-        if st.button("EDIT IMAGE"):
-            st.session_state.page = "edit_image"
-
+    # with col1:
+    #     col11, col12 = st.columns(2)
+    #     with col12:
+    #       if st.button("MAIN MENU"):
+    #           st.session_state.page = "main"
+    # with col2:
+    #     if st.button("CHANGE BACKGROUND"):
+    #         st.session_state.page = "change_bg"
+    # with col3:
+    #     if st.button("IMAGE TO VIDEO"):
+    #         st.session_state.page = "img2vid"
+    # with col4:
+    #     if st.button("EDIT IMAGE"):
+    #         st.session_state.page = "edit_image"
 
 def change_background():
-    st.text(" ")
-    # st.markdown("<h1 style='text-align: center; color: white;'>Change Ima</h1>", unsafe_allow_html=True)
-    _, center, __ = st.columns(3)
-    with center:
-      st.text("AICHEMIST")
 
     st.subheader('Image')
     upload_image = st.file_uploader('Upload the image you want to generate here: ')
@@ -159,11 +161,6 @@ def img2vid():
 
 #
 def edit_image():
-    st.text(" ")
-    # st.markdown("<h1 style='text-align: center; color: white;'>Change Ima</h1>", unsafe_allow_html=True)
-    _, center, __ = st.columns(3)
-    with center:
-      st.text("AICHEMIST")
     image_upload = st.file_uploader("Upload a photo")
     task_options = ('Object-Removal', 'Shape-Guided', 'Inpaint', 'Image-Outpainting')
     mask_creation_methods = ('Use Prompt (best for remove)', 'Draw Mask')
@@ -263,20 +260,6 @@ def edit_image():
 
 
 #-----------main page code-------------#
-
-
-st.markdown(
-    """
-    <style>
-    .stButton button {
-        font-size: 50px;
-        padding: 20px 30px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 st.markdown(
     """
     <style>
@@ -290,7 +273,37 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.image(back_ground)
+# Sử dụng st.image() để hiển thị hình ảnh
+st.image(back_ground, use_column_width=True)
+
+# # Nếu bạn muốn chèn HTML và CSS
+# st.markdown(
+#     f"""
+#     <div class="center">
+#         <img src="data:image/jpeg;base64,{base64.b64encode(open('images/background.jpg', "rb").read()).decode()}" class="center">
+#     </div>
+#     """,
+#     unsafe_allow_html=True,
+# )
+st.markdown(
+    """
+    <style>
+    .stButton button {
+        <style>
+        font-size: 60px;
+        padding: 30px 30px;
+        border: 8px solid #669999; /* Thêm viền */
+        background-color: #0e1118; /* Màu nền */
+        color: #b0dcdc; /* Màu chữ */
+        display: block;
+        margin: 20px auto; /* Căn giữa nút */
+
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # @st.cache_resource
 # def load_model_gen():
 #     return robust_load_model()
