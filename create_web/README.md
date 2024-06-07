@@ -12,7 +12,17 @@
 # Set up for Edit Image
 ```bash
 !pip install -q -r requirements.txt
+
+!git clone https://github.com/IDEA-Research/Grounded-Segment-Anything
+%cd /Grounded-Segment-Anything/GroundingDINO
 !pip install -q .
+%cd /Grounded-Segment-Anything/segment_anything
+!pip install -q .
+%cd ..
+%cd ..
+!rm -r Grounded-Segment-Anything
+!rm -r PowerPaint-V1-stable-diffusion-inpainting
+
 !wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
 ```
 
