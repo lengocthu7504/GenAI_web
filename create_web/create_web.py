@@ -136,9 +136,8 @@ def change_background():
               with st.spinner('Generating...'):
                   st.session_state.upload_image = Image.open(st.session_state.upload_image)
                   output_image = model(image=st.session_state.upload_image, prompt=st.session_state.prompt)
-                  _, center, __ = st.columns(3)
-                  with center:
-                      st.image(output_image)
+
+                  st.image(output_image)
               st.success('Done!')
 
 def img2vid():
