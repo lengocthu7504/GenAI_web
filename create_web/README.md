@@ -7,7 +7,7 @@
 # Set up for Edit Image
 
 ```bash
-%cd /content/drive/MyDrive/PIXEL_PILOT/create_web
+%cd PIXEL_PILOT/create_web
 !pip install -q -r requirements.txt
 !pip install -q .
 !wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
