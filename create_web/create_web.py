@@ -324,16 +324,16 @@ def show_page(page):
         side_bar()
     elif page == "change_bg":
         side_bar()
-        del_state()
+        # del_state()
         change_background()
     elif page == "img2vid":
         side_bar()
-        del_state()
+        # del_state()
         st.header("Image to Video")
         # img2vid()
     elif page == "edit_image":
         side_bar()
-        del_state()
+        # del_state()
         edit_image()
 
 
