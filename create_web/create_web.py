@@ -21,36 +21,36 @@ import numpy as np
 import cv2
 from streamlit_drawable_canvas import st_canvas
 from PIL import Image
-# from edit_image.detect_DINO import detect, groundingdino_model, load_image
-# from edit_image.sam import segment, draw_mask, sam_predictor
-# from edit_image.mask_create import create_mask
-# from edit_image.powerpaint import gen_image
-# from edit_image.pipeline_PowerPaint import StableDiffusionInpaintPipeline as Pipeline
-# from edit_image.power_paint_tokenizer import PowerPaintTokenizer
-# from download_link_creator import get_image_download_link
+from edit_image.detect_DINO import detect, groundingdino_model, load_image
+from edit_image.sam import segment, draw_mask, sam_predictor
+from edit_image.mask_create import create_mask
+from edit_image.powerpaint import gen_image
+from edit_image.pipeline_PowerPaint import StableDiffusionInpaintPipeline as Pipeline
+from edit_image.power_paint_tokenizer import PowerPaintTokenizer
+from download_link_creator import get_image_download_link
 #---------------Xử lý nền------------------#
-# def robust_load_model(retry_limit=3, backoff_factor=2):
-#     attempts = 0
-#     while attempts < retry_limit:
-#         try:
-#             pipe = Pipeline.from_pretrained(
-#                 "Sanster/PowerPaint-V1-stable-diffusion-inpainting",
-#                 torch_dtype=torch.float16,
-#                 safety_checker=None,
-#                 variant="fp16",
-#             )
-#             pipe.tokenizer = PowerPaintTokenizer(pipe.tokenizer)
-#             if torch.cuda.is_available():
-#                 return pipe.to("cuda")
-#             else:
-#                 return pipe.to("cpu")
-#         except Exception as e:
-#             attempts += 1
-#             wait_time = backoff_factor ** attempts
-#             st.error(f"Failed to load model on attempt {attempts}. Retrying in {wait_time} seconds...")
-#             time.sleep(wait_time)
-#     st.error("Failed to load model after several attempts. Please check your connection and try again later.")
-#     return None
+def robust_load_model(retry_limit=3, backoff_factor=2):
+    attempts = 0
+    while attempts < retry_limit:
+        try:
+            pipe = Pipeline.from_pretrained(
+                "Sanster/PowerPaint-V1-stable-diffusion-inpainting",
+                torch_dtype=torch.float16,
+                safety_checker=None,
+                variant="fp16",
+            )
+            pipe.tokenizer = PowerPaintTokenizer(pipe.tokenizer)
+            if torch.cuda.is_available():
+                return pipe.to("cuda")
+            else:
+                return pipe.to("cpu")
+        except Exception as e:
+            attempts += 1
+            wait_time = backoff_factor ** attempts
+            st.error(f"Failed to load model on attempt {attempts}. Retrying in {wait_time} seconds...")
+            time.sleep(wait_time)
+    st.error("Failed to load model after several attempts. Please check your connection and try again later.")
+    return None
 
 # Xóa từng mục trong session_state
 def del_state():
@@ -304,13 +304,13 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# @st.cache_resource
-# def load_model_gen():
-#     return robust_load_model()
+@st.cache_resource
+def load_model_gen():
+    return robust_load_model()
 
-# pipe = load_model_gen()
-# if pipe is None:
-#     st.stop()
+pipe = load_model_gen()
+if pipe is None:
+    st.stop()
 # Khởi tạo state cho trang hiện tại nếu chưa có
 if 'page' not in st.session_state:
     st.session_state.page = "main"
