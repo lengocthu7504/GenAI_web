@@ -17,7 +17,7 @@
 ```
 
 # Run web streamlit
-Copy IP and click on the link .lt then paster the IP  and  submit
+Copy IP and click on the link .lt then paste the IP  and click submit
 ``` bash
 !wget -q -O - ipv4.icanhazip.com
 !streamlit run create_web.py --server.enableXsrfProtection false &>/dev/null & npx localtunnel --port 8501
