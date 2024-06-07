@@ -1,13 +1,16 @@
-# Set up for Change Background
+# Git project
+``` bash
+!git clone https://github.com/lengocthu7504/GenAI_web.git
+%cd PIXEL_PILOT/create_web
+```
 
+# Set up for Change Background
 ```bash
 !pip install controlnet_aux streamlit diffusers transformers accelerate safetensors
 ```
 
 # Set up for Edit Image
-
 ```bash
-%cd PIXEL_PILOT/create_web
 !pip install -q -r requirements.txt
 !pip install -q .
 !wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
