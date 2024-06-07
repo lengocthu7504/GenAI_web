@@ -8,7 +8,7 @@ import torch
 import time
 from io import BytesIO
 
-from change_background_model import model
+# from change_background_model import model
 # from remove_object import *
 # from img2vid import *
 st.set_page_config(layout="wide")
@@ -165,7 +165,7 @@ def img2vid():
 def edit_image():
     image_upload = st.file_uploader("Upload a photo")
     task_options = ('Object-Removal', 'Shape-Guided', 'Inpaint', 'Image-Outpainting')
-    mask_creation_methods = ('Use Prompt (best for remove)', 'Draw Mask')
+    mask_creation_methods = ('Use Prompt', 'Draw Mask')
 
     current_task = st.sidebar.radio("Choose task:", task_options)
     current_mask_creation_method = st.sidebar.radio("Choose the method to create a mask:", mask_creation_methods)
@@ -217,7 +217,7 @@ def edit_image():
 
         elif current_mask_creation_method == 'Draw Mask':
             st.subheader('Draw on the image based on the selected task')
-            stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 5)
+            stroke_width = st.sidebar.slider("Stroke width: ", 5, 100, 10)
             h, w = st.session_state.image_source.shape[:2]
             scale_factor = 800 / max(w, h) if max(w, h) > 800 else 1
             w_, h_ = int(w * scale_factor), int(h * scale_factor)
