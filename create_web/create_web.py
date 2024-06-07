@@ -126,20 +126,20 @@ def change_background():
         with center:
             st.image(st.session_state.upload_image, caption='Original Image')
 
-    st.subheader('Prompt')
-    st.session_state.prompt = st.text_input('Enter your prompt here: ')
-    # st.session_state.num_img = st.number_input('Number of images you want to create: ', 1, 4)
-    _, center, __ = st.columns(3)
-    with center:
-      if st.button('Generate'):
-          # columns = st.columns(st.session_state.num_img)
-          with st.spinner('Generating...'):
-              st.session_state.upload_image = Image.open(st.session_state.upload_image)
-              output_image = model(image=st.session_state.upload_image, prompt=st.session_state.prompt)
-              _, center, __ = st.columns(3)
-              with center:
-                  st.image(output_image)
-          st.success('Done!')
+        st.subheader('Prompt')
+        st.session_state.prompt = st.text_input('Enter your prompt here: ')
+        # st.session_state.num_img = st.number_input('Number of images you want to create: ', 1, 4)
+        _, center, __ = st.columns(3)
+        with center:
+          if st.button('Generate'):
+              # columns = st.columns(st.session_state.num_img)
+              with st.spinner('Generating...'):
+                  st.session_state.upload_image = Image.open(st.session_state.upload_image)
+                  output_image = model(image=st.session_state.upload_image, prompt=st.session_state.prompt)
+                  _, center, __ = st.columns(3)
+                  with center:
+                      st.image(output_image)
+              st.success('Done!')
 
 def img2vid():
     # st.subheader('Image')
@@ -318,8 +318,8 @@ if 'page' not in st.session_state:
 # Hàm để hiển thị nội dung của từng trang
 def show_page(page):
     if page == "main":
-        side_bar()
         del_state()
+        side_bar()
     elif page == "change_bg":
         side_bar()
         del_state()

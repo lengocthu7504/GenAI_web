@@ -11,7 +11,7 @@ from diffusers import (
 )
 
 
-def model(image, prompt, num):
+def model(image, prompt):
     # model_id = "timbrooks/instruct-pix2pix"
     # pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_id, torch_dtype=torch.float16, safety_checker=None)
     # pipe.to("cuda")
@@ -42,5 +42,5 @@ def model(image, prompt, num):
     pipe.enable_model_cpu_offload()
 
     generator = torch.manual_seed(0)
-    image = pipe(prompt, num_inference_steps=30, generator=generator, image=control_image).images
+    image = pipe(prompt, num_inference_steps=30, generator=generator, image=control_image).images[0]
     return image
