@@ -139,6 +139,9 @@ def change_background():
 
                   st.image(output_image)
               st.success('Done!')
+              link = get_image_download_link(st.session_state.result_image)
+              st.subheader('Click on link below to download image')
+              st.markdown(link, unsafe_allow_html=True)
 
 def img2vid():
     # st.subheader('Image')
@@ -252,7 +255,7 @@ def edit_image():
                 with center:
                     st.image(st.session_state.result_image, caption="Processed Image")
                 link = get_image_download_link(st.session_state.result_image)
-                st.subheader('CLick on link below to download image')
+                st.subheader('Click on link below to download image')
                 st.markdown(link, unsafe_allow_html=True)
 
 
