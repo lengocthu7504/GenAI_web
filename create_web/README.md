@@ -1,7 +1,7 @@
 # Git project
 ``` bash
 !git clone https://github.com/lengocthu7504/GenAI_web.git
-%cd PIXEL_PILOT/create_web
+%cd GenAI_web/create_web
 ```
 
 # Set up for Change Background
@@ -14,14 +14,15 @@
 !pip install -q -r requirements.txt
 
 !git clone https://github.com/IDEA-Research/Grounded-Segment-Anything
-%cd /Grounded-Segment-Anything/GroundingDINO
+%cd ./Grounded-Segment-Anything/GroundingDINO
 !pip install -q .
-%cd /Grounded-Segment-Anything/segment_anything
+%cd ..
+%cd ./segment_anything/
 !pip install -q .
 %cd ..
 %cd ..
 !rm -r Grounded-Segment-Anything
-!rm -r PowerPaint-V1-stable-diffusion-inpainting
+# !rm -r PowerPaint-V1-stable-diffusion-inpainting
 
 !wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
 ```
