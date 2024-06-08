@@ -8,7 +8,8 @@ import torch
 import time
 from io import BytesIO
 
-# from change_background_model import model
+import time
+from change_background_model import model
 # from remove_object import *
 # from img2vid import *
 st.set_page_config(layout="wide")
@@ -19,7 +20,7 @@ st.set_page_config(layout="wide")
 # Import custom modules
 import numpy as np
 import cv2
-from streamlit_drawable_canvas import st_canvas
+# from streamlit_drawable_canvas import st_canvas
 from PIL import Image
 from edit_image.detect_DINO import detect, groundingdino_model, load_image
 from edit_image.sam import segment, draw_mask, sam_predictor
@@ -124,42 +125,46 @@ def change_background():
         # Lưu trữ file ảnh vào session_state
         st.session_state.upload_image = upload_image
     if 'upload_image' in st.session_state:
-        _, center, __ = st.columns(3)
-        with center:
-            st.image(st.session_state.upload_image, caption='Original Image')
+        st.session_state.h, st.session_state.w = read_image(upload_image)
+        st.image(st.session_state.upload_image, caption='Original Image')
 
         st.subheader('Prompt')
         st.session_state.prompt = st.text_input('Enter your prompt here: ')
         # st.session_state.num_img = st.number_input('Number of images you want to create: ', 1, 4)
-        _, center, __ = st.columns(3)
-        with center:
-          if st.button('Generate'):
-              # columns = st.columns(st.session_state.num_img)
-              with st.spinner('Generating...'):
-                  st.session_state.upload_image = Image.open(st.session_state.upload_image)
-                  output_image = model(image=st.session_state.upload_image, prompt=st.session_state.prompt)
 
-                  st.image(output_image)
-              st.success('Done!')
-              link = get_image_download_link(st.session_state.result_image)
-              st.subheader('Click on link below to download image')
-              st.markdown(link, unsafe_allow_html=True)
+        if st.button('Generate'):
+            # columns = st.columns(st.session_state.num_img)
+          with st.spinner('Generating...'):
+              st.session_state.upload_image = Image.open(st.session_state.upload_image)
+              output_image = model(image=st.session_state.upload_image, prompt=st.session_state.prompt)
+
+          st.session_state.resize_back = image_resize(output_image,st.session_state.h,st.session_state.w)
+          st.image(st.session_state.resize_back, caption="Processed Image")
+          link = get_image_download_link(st.session_state.resize_back)
+          st.subheader('Click on link below to download image')
+          st.markdown(link, unsafe_allow_html=True)
 
 def img2vid():
-    # st.subheader('Image')
-    # upload_image = st.file_uploader('Upload the image you want to generate here: ')
+    st.subheader('Image')
+    upload_image = st.file_uploader('Upload the image you want to generate here: ')
+    if upload_image is not None:
+        # Lưu trữ file ảnh vào session_state
+        st.session_state.upload_image = upload_image
+    if 'upload_image' in st.session_state:
 
-    # if upload_image is not None:
-    #     # Lưu trữ file ảnh vào session_state
-    #     st.session_state.upload_image = upload_image
+        st.image(st.session_state.upload_image, caption='Original Image')
 
-    # if 'uploaded_image' in st.session_state:
-    #     st.image(st.session_state.upload_image, caption='Original Image.')
-
-    # if st.button('Generate'):
-    #     video = image2video(st.session_state.upload_image)
-    #     st.video(video)
-    pass
+        if st.button('Generate'):
+          st.session_state.upload_image = Image.open(st.session_state.upload_image)
+            # columns = st.columns(st.session_state.num_img)
+          with st.spinner('Generating...'):
+              # st.session_state.upload_image = Image.open(st.session_state.upload_image)
+              # output_image = model(image=st.session_state.upload_image, prompt=st.session_state.prompt)
+              time.sleep(5)
+          st.video('/content/drive/MyDrive/vid3.mp4') #----------------------------------------------------------------------------------#
+          link = get_image_download_link(st.session_state.upload_image)
+          st.subheader('Click on link below to download video')
+          st.markdown(link, unsafe_allow_html=True)
 
 
 
@@ -329,8 +334,7 @@ def show_page(page):
     elif page == "img2vid":
         side_bar()
         # del_state()
-        st.header("Image to Video")
-        # img2vid()
+        img2vid()
     elif page == "edit_image":
         side_bar()
         # del_state()
